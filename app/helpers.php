@@ -14,3 +14,10 @@ function responseJson($message, $optional = []){
     }
     return response()->json($array);
 }
+
+function image($path){
+    if($path){
+        return config('app.url')."/".str_replace('public/', '', $path);
+    }
+}
+
