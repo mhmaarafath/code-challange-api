@@ -11,7 +11,7 @@ class Employee extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $appends = ['leaves_available'];
+    protected $appends = ['leaves_available', 'total_working_hours'];
 
     public function company(){
         return $this->belongsTo(Company::class);
@@ -25,6 +25,10 @@ class Employee extends Model
     }
     public function leaves(){
         return $this->hasMany(Leave::class);
+    }
+
+    public function attendances(){
+        return $this->hasMany(Attendance::class);
     }
 
     protected function leavesAvailable(): Attribute
@@ -43,5 +47,14 @@ class Employee extends Model
 
             }
         );
+    }
+
+    protected function totalWorkingHours(): Attribute{
+        return new Attribute(
+            get: function (){
+                return $this->attendances->sum('hours');
+            }
+        );
+
     }
 }

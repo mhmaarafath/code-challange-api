@@ -17,7 +17,7 @@ class Attendance extends Model
     {
         return new Attribute(
             get: function (){
-                return gmdate('H:i:s', Carbon::parse($this->checkin)->diffInSeconds(Carbon::parse($this->checkout)));
+                return Carbon::parse($this->checkin)->diffInHours(Carbon::parse($this->checkout));
             }
         );
     }
