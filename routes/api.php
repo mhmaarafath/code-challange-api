@@ -24,3 +24,5 @@ Route::get('companies/{company}/leaves', [\App\Http\Controllers\CompanyControlle
 Route::apiResource('employees', \App\Http\Controllers\EmployeeController::class);
 Route::get('employees/{employee}/leaves', [\App\Http\Controllers\EmployeeController::class, 'leaves']);
 Route::apiResource('leaves', \App\Http\Controllers\LeaveController::class);
+Route::apiResource('attendances', \App\Http\Controllers\AttendanceController::class);
+Route::post('attendances/upload', [\App\Http\Controllers\AttendanceController::class, 'upload']);

@@ -20,7 +20,7 @@ class Leave extends Model
     {
         return new Attribute(
             get: function (){
-                return Carbon::parse($this->start_date)->diffInDays($this->end_date) + 1;
+                return Carbon::parse($this->start_date)->diffInDays(Carbon::parse($this->end_date)) + 1;
             }
         );
     }

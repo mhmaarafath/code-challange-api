@@ -2,19 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\AttendanceImport;
+use App\Imports\WorkersImport;
 use App\Models\Attendance;
+use App\Models\Company;
+use App\Models\Worker;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AttendanceController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        $attendances = Attendance::all();
+        return responseJson('', [
+            'attendances' => $attendances,
+        ]);
+
     }
 
     /**
@@ -81,5 +91,12 @@ class AttendanceController extends Controller
     public function destroy(Attendance $attendance)
     {
         //
+    }
+
+    public function upload(Request $request): JsonResponse
+    {
+        $file = $request->file('file');
+        Excel::import(new AttendanceImport(), $file);
+        return responseJson('upload successfully');
     }
 }
