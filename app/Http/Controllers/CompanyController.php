@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Employee;
+use App\Models\Leave;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -62,6 +63,17 @@ class CompanyController extends Controller
     {
         return responseJson('', [
             'employees' => $company->employees,
+        ]);
+    }
+
+    public function leaves(Company $company): JsonResponse
+    {
+        $leaves = Leave::whereRelation('employee', function ($q) use ($company){
+            $q->where('company_id', $company->id);
+        })->get();
+
+        return responseJson('', [
+            'leaves' => $leaves,
         ]);
     }
 

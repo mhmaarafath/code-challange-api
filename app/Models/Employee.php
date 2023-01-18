@@ -20,4 +20,7 @@ class Employee extends Model
             get: fn ($value) => image($value),
         );
     }
+    public function leaves(){
+        return $this->hasMany(Leave::class);
+    }
 }

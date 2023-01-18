@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('leaves', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('employee_id');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->string('leave_reason');
             $table->timestamps();
         });
     }
