@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\Leave;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -37,21 +38,38 @@ class LeaveController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-            'leave_reason' => 'required',
-            'employee_id' => [
-                'required',
-                'exists:App\Models\Employee,id'
-            ],
-        ]);
-        $validator->validate();
-        $validated = $validator->safe()->all();
-        $leave = Leave::create($validated);
-        return responseJson('leave created successfully', [
-            'leave' => $leave,
-        ]);
+        $employee = Employee::find($request->employee_id);
+        if($employee){
+            $leaves_available = $employee->leaves_available;
+            if($leaves_available > 0){
+                $days = Carbon::parse($request->start_date)->diffInDays(Carbon::parse($request->end_date)) + 1;
+                if($leaves_available > $days){
+                    $validator = Validator::make($request->all(), [
+                        'start_date' => 'required|date',
+                        'end_date' => 'required|date',
+                        'leave_reason' => 'required',
+                        'employee_id' => [
+                            'required',
+                            'exists:App\Models\Employee,id'
+                        ],
+                    ]);
+                    $validator->validate();
+                    $validated = $validator->safe()->all();
+                    $leave = Leave::create($validated);
+                    return responseJson('leave created successfully', [
+                        'leave' => $leave,
+                    ]);
+                } else {
+                    return responseJson("remaining ${leaves_available}");
+                }
+            } else {
+                return responseJson("not eligible for leaves");
+            }
+        }else{
+            return responseJson('employee not found');
+        }
+
+
     }
 
     /**
