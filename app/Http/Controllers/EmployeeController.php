@@ -70,6 +70,13 @@ class EmployeeController extends Controller
         ]);
     }
 
+    public function leaves(Employee $employee): JsonResponse
+    {
+        return responseJson('', [
+            'leaves' => $employee->leaves,
+        ]);
+    }
+
     /**
      * Update the specified resource in storage.
      *
