@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Employee;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -55,6 +56,12 @@ class CompanyController extends Controller
     {
         return responseJson('', [
             'company' => $company,
+        ]);
+    }
+    public function employees(Company $company): JsonResponse
+    {
+        return responseJson('', [
+            'employees' => $company->employees,
         ]);
     }
 
