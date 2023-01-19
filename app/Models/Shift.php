@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Shift extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+    public function shedules(){
+        return $this->hasMany(Shedule::class);
+    }
 }
