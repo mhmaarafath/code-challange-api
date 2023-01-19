@@ -20,7 +20,7 @@ class AttendanceController extends Controller
      */
     public function index(): JsonResponse
     {
-        $attendances = Attendance::all();
+        $attendances = Attendance::with('employee')->get();
         return responseJson('', [
             'attendances' => $attendances,
         ]);

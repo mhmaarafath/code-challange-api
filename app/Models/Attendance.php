@@ -17,9 +17,17 @@ class Attendance extends Model
     {
         return new Attribute(
             get: function (){
-                return Carbon::parse($this->checkin)->diffInHours(Carbon::parse($this->checkout));
+                if($this->checkin != '' && $this->checkout != ''){
+                    return Carbon::parse($this->checkin)->diffInHours(Carbon::parse($this->checkout));
+                } else {
+                    return 0;
+                }
             }
         );
+    }
+
+    public function employee(){
+        return $this->belongsTo(Employee::class);
     }
 
 }
