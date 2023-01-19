@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('profile_photo')->nullable();
             $table->foreignId('company_id');
+            $table->foreignId('pupils_id');
             $table->date('dob');
             $table->string('emirates_id')->nullable();
             $table->date('contract_start_date');
