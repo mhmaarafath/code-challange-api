@@ -42,3 +42,18 @@ Route::post('challange-02', function (Request $request){
        'response' => $duplicates,
    ]);
 });
+
+Route::post('challange-04', function (Request $request){
+    $array = $request->documents;
+
+    $result = [];
+
+    foreach($array as $key => $val) {
+        $result[$val][] = $key;
+    }
+
+    return responseJson('', [
+        'request' => $array,
+        'response' => $result,
+    ]);
+});
