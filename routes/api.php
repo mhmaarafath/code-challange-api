@@ -26,3 +26,19 @@ Route::get('employees/{employee}/leaves', [\App\Http\Controllers\EmployeeControl
 Route::apiResource('leaves', \App\Http\Controllers\LeaveController::class);
 Route::apiResource('attendances', \App\Http\Controllers\AttendanceController::class);
 Route::post('attendances/upload', [\App\Http\Controllers\AttendanceController::class, 'upload']);
+
+
+Route::post('challange-02', function (Request $request){
+    $array = $request->a;
+    $count = array_count_values($array);
+    $duplicates = [];
+    foreach ($count as $key => $value){
+        if($value > 1){
+            $duplicates[] = $key;
+        }
+    }
+   return responseJson('', [
+       'request' => $array,
+       'response' => $duplicates,
+   ]);
+});
