@@ -8,7 +8,7 @@
 - git checkout challange-01
 - You may find sample timesheet excel file in the repo
 - Use postman form data to upload excel file ({{base_url}}/attendances/upload)
-- Clone frontend repository <a href="https://github.com/mhmaarafath/code-challange">Frontend</a>
+- Clone frontend repository <a target="_blank" href="https://github.com/mhmaarafath/code-challange">Frontend</a>
 - Change NEXT_PUBLIC_API_URL as with api path (http://code-challange-api.test/api/)
 - npm run dev to check uploaded data
 
